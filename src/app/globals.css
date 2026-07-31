@@ -1,0 +1,117 @@
+@import "tailwindcss";
+
+/* ------------------------------------------------------------------ *
+ * Private Agent — design tokens (locked from the "BEST" reference art)
+ * Luxury / editorial: warm ivory ground, deep navy + charcoal bands,
+ * gold-bronze accent, high-contrast serif display + humanist sans.
+ * ------------------------------------------------------------------ */
+@theme {
+  /* Grounds & surfaces */
+  --color-cream: #f7f3ec; /* page background */
+  --color-ivory: #fbf9f4; /* raised cards */
+  --color-sand: #efe8db; /* subtle alt sections */
+  --color-line: #e4ddce; /* hairline borders */
+
+  /* Darks */
+  --color-ink: #141414; /* near-black bands / footer */
+  --color-navy: #14203a; /* deep navy (popular card, accents) */
+  --color-navy-700: #1d2c4a;
+
+  /* Text */
+  --color-charcoal: #1e1e1e;
+  --color-muted: #5f5a52;
+  --color-faint: #8a8378;
+
+  /* Accent */
+  --color-gold: #b0894f;
+  --color-gold-light: #c9a96a;
+  --color-gold-soft: #e7d9be;
+
+  /* Fonts (wired to next/font variables in layout.tsx) */
+  --font-serif: var(--font-playfair), Georgia, "Times New Roman", serif;
+  --font-sans: var(--font-inter), ui-sans-serif, system-ui, sans-serif;
+
+  /* Motion */
+  --ease-out-soft: cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+:root {
+  color-scheme: light;
+}
+
+html {
+  scroll-behavior: smooth;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+body {
+  background: var(--color-cream);
+  color: var(--color-charcoal);
+  font-family: var(--font-sans);
+}
+
+::selection {
+  background: var(--color-gold);
+  color: #fff;
+}
+
+/* --- Reusable primitives ------------------------------------------ */
+
+/* Eyebrow / kicker: uppercase, letter-spaced gold label */
+@utility eyebrow {
+  font-family: var(--font-sans);
+  text-transform: uppercase;
+  letter-spacing: 0.22em;
+  font-size: 0.72rem;
+  font-weight: 600;
+  color: var(--color-gold);
+}
+
+/* Uppercase letter-spaced label used on nav & buttons */
+@utility label-caps {
+  text-transform: uppercase;
+  letter-spacing: 0.14em;
+  font-weight: 600;
+}
+
+/* Serif display helper */
+@utility font-display {
+  font-family: var(--font-serif);
+  font-weight: 500;
+  letter-spacing: -0.01em;
+}
+
+/* Thin gold diamond divider — used under section headers */
+@utility rule-diamond {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.75rem;
+}
+
+/* Fade/rise entrance (respects reduced motion via media query below) */
+@keyframes pa-rise {
+  from {
+    opacity: 0;
+    transform: translateY(16px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.pa-rise {
+  animation: pa-rise 0.7s var(--ease-out-soft) both;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  .pa-rise {
+    animation: none;
+  }
+}
