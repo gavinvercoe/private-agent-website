@@ -1,5 +1,5 @@
 import { NextResponse } from "next/server";
-import { appendLead, isValidEmail } from "@/lib/leads";
+import { saveLead, isValidEmail } from "@/lib/leads";
 
 export const runtime = "nodejs";
 
@@ -18,9 +18,19 @@ export async function POST(request: Request) {
       { status: 422 },
     );
   }
+  const cleanEmail = email.trim().toLowerCase();
 
   try {
-    await appendLead("newsletter", { email: email.trim().toLowerCase() });
+    await saveLead(
+      "newsletter",
+      { email: cleanEmail },
+      {
+        email: cleanEmail,
+        source: "Website - Quick Capture",
+        userGroup: "Waitlist",
+        subscribed: true,
+      },
+    );
   } catch {
     return NextResponse.json(
       { error: "Could not save your subscription. Please try again." },

@@ -9,8 +9,9 @@ import { Reveal } from "@/components/Reveal";
 import { FeatureGrid, FeatureList } from "@/components/FeatureGrid";
 import { PhoneWall } from "@/components/PhoneWall";
 import { PhoneShot, ScreenGallery } from "@/components/PhoneShot";
-import { NewsletterForm } from "@/components/NewsletterForm";
+import { QuickEmailCapture } from "@/components/QuickEmailCapture";
 import { FoundingMemberForm } from "@/components/FoundingMemberForm";
+import { WaitlistEmailProvider } from "@/components/WaitlistEmailContext";
 import { IconLock, IconCheck, IconBadge } from "@/components/icons";
 import { agentValue, heroWallShots, trustPoints } from "@/lib/content";
 
@@ -38,7 +39,7 @@ const certificationPoints = [
 
 export default function ComingSoonPage() {
   return (
-    <>
+    <WaitlistEmailProvider>
       <TeaserNav />
       <main className="flex-1">
         {/* ---------------------------------------------------------- HERO */}
@@ -67,8 +68,8 @@ export default function ComingSoonPage() {
                 the doors to a limited group of Founding Members first.
               </p>
 
-              <div id="join" className="mx-auto mt-9 max-w-md scroll-mt-24">
-                <NewsletterForm tone="dark" />
+              <div className="mx-auto mt-9 max-w-md">
+                <QuickEmailCapture />
                 <p className="mt-4 text-sm text-faint">
                   Founding Members get preferential pricing and exclusive
                   launch benefits. No spam &mdash; unsubscribe anytime.
@@ -279,6 +280,6 @@ export default function ComingSoonPage() {
         </Section>
       </main>
       <TeaserFooter />
-    </>
+    </WaitlistEmailProvider>
   );
 }

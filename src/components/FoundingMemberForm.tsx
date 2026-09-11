@@ -3,6 +3,7 @@
 import { useState } from "react";
 import { IconCheck } from "./icons";
 import { COUNTRIES } from "@/lib/countries";
+import { useWaitlistEmail } from "./WaitlistEmailContext";
 import { cn } from "@/lib/cn";
 
 const fieldBase =
@@ -53,6 +54,7 @@ export function FoundingMemberForm() {
     "idle",
   );
   const [message, setMessage] = useState("");
+  const { email, setEmail } = useWaitlistEmail();
 
   async function onSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
@@ -116,6 +118,8 @@ export function FoundingMemberForm() {
             type="email"
             name="email"
             required
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
             className={fieldBase}
             placeholder="you@agency.com"
           />

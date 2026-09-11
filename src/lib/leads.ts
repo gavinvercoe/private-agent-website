@@ -1,6 +1,7 @@
 import { promises as fs } from "fs";
 import os from "os";
 import path from "path";
+import { isLoopsConfigured, upsertLoopsContact } from "./loops";
 
 /**
  * Placeholder lead store: appends submissions to a local JSON file.
@@ -35,6 +36,26 @@ export async function appendLead(
   const existing = await readJson(file);
   existing.push({ ...record, receivedAt: new Date().toISOString() });
   await fs.writeFile(file, JSON.stringify(existing, null, 2), "utf8");
+}
+
+/**
+ * Primary entry point for API routes: syncs to Loops.so when configured
+ * (`LOOPS_API_KEY` set), otherwise falls back to the local placeholder
+ * store. A local record is also kept as a lightweight backup whenever
+ * Loops is the primary destination, best-effort (its failure doesn't
+ * affect the response).
+ */
+export async function saveLead(
+  kind: "apply" | "newsletter" | "founding-member",
+  record: Record<string, unknown>,
+  loopsFields: Record<string, unknown>,
+): Promise<void> {
+  if (isLoopsConfigured()) {
+    await upsertLoopsContact(loopsFields);
+    appendLead(kind, record).catch(() => {});
+    return;
+  }
+  await appendLead(kind, record);
 }
 
 export function isValidEmail(email: unknown): email is string {

@@ -1,5 +1,5 @@
 import { NextResponse } from "next/server";
-import { appendLead, isValidEmail, clean } from "@/lib/leads";
+import { saveLead, isValidEmail, clean } from "@/lib/leads";
 
 export const runtime = "nodejs";
 
@@ -46,7 +46,24 @@ export async function POST(request: Request) {
   record.cellPhone = clean(body.cellPhone, 40);
 
   try {
-    await appendLead("founding-member", record);
+    await saveLead("founding-member", record, {
+      email: record.email,
+      firstName: record.firstName,
+      lastName: record.lastName,
+      source: "Website - Founding Member Form",
+      userGroup: "Founding Member",
+      subscribed: true,
+      // Custom properties — must be created in Loops (Settings > Contact
+      // Properties, type "String") before this will sync without error.
+      title: record.title,
+      country: record.country,
+      city: record.city,
+      company: record.company,
+      position: record.position,
+      yearsExperience: record.yearsExperience,
+      dealsTransacted: record.dealsTransacted,
+      ...(record.cellPhone ? { cellPhone: record.cellPhone } : {}),
+    });
   } catch {
     return NextResponse.json(
       { error: "Could not submit your details. Please try again." },

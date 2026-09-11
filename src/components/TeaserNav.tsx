@@ -39,7 +39,7 @@ export function TeaserNav() {
           ))}
         </nav>
 
-        <Button href="#join" variant="primary" size="sm">
+        <Button href="#founding-member" variant="primary" size="sm">
           Join Waitlist
         </Button>
       </div>
