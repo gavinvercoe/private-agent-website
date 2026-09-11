@@ -1,248 +1,183 @@
-import Link from "next/link";
+import type { Metadata } from "next";
+import { TeaserNav } from "@/components/TeaserNav";
+import { TeaserFooter } from "@/components/TeaserFooter";
 import { Container } from "@/components/Container";
 import { Section } from "@/components/Section";
 import { SectionHeader } from "@/components/SectionHeader";
 import { Button } from "@/components/Button";
 import { Reveal } from "@/components/Reveal";
 import { FeatureGrid } from "@/components/FeatureGrid";
-import { CyclingPhone, MiniPhone } from "@/components/PhoneShot";
 import { PhoneWall } from "@/components/PhoneWall";
-import {
-  ApplyCTA,
-  NewsletterSection,
-  ContactSection,
-  FoundingMemberBand,
-} from "@/components/marketing-sections";
-import { IconCheck } from "@/components/icons";
-import { cn } from "@/lib/cn";
-import {
-  heroWallShots,
-  proofOfValue,
-  agentAdvantageJourney,
-  workspaceStories,
-  credibilityPoints,
-  buyerOnboardingShots,
-} from "@/lib/content";
+import { NewsletterForm } from "@/components/NewsletterForm";
+import { IconLock } from "@/components/icons";
+import { agentValue, heroWallShots } from "@/lib/content";
 
-const heroChips = [
-  "Get found by serious buyers",
-  "Run every client in one place",
-  "Keep more deals moving to close",
+export const metadata: Metadata = {
+  title: "Coming Soon",
+  description:
+    "Private Agent is launching soon — the private platform for buyer's agents. Join the mailing list now for preferential Founding Member pricing.",
+};
+
+const lockedAreas = [
+  { label: "For Buyers", caption: "Unlocking soon" },
+  { label: "How It Works", caption: "Unlocking soon" },
+  { label: "Full Pricing", caption: "Unlocking soon" },
+  { label: "Resources", caption: "Unlocking soon" },
+  { label: "About Us", caption: "Unlocking soon" },
 ];
 
-export default function Home() {
+export default function ComingSoonPage() {
   return (
     <>
-      {/* ---------------------------------------------------------- HERO */}
-      <section className="relative overflow-hidden bg-cream pt-32 pb-16 sm:pt-40 sm:pb-20">
-        <div
-          aria-hidden
-          className="pointer-events-none absolute inset-x-0 top-0 h-[36rem] opacity-70"
-          style={{
-            background:
-              "radial-gradient(45% 60% at 78% 8%, rgba(176,137,79,0.16), transparent 70%)",
-          }}
-        />
-        <Container className="relative">
-          <Reveal className="mx-auto max-w-2xl text-center lg:mx-0 lg:max-w-2xl lg:text-left">
-            <p className="eyebrow mb-5">
-              The Private Platform for Buyer&rsquo;s Agents
-            </p>
-            <h1 className="font-display text-[2.5rem] leading-[1.08] text-navy sm:text-6xl">
-              Win better buyers.{" "}
-              <em className="text-gold">Run better deals.</em>
-            </h1>
-            <p className="mx-auto mt-6 max-w-xl text-lg leading-relaxed text-muted lg:mx-0">
-              Private Agent helps you get discovered by serious buyers,
-              manage every moving part of the relationship, and guide more
-              clients from first conversation to completed purchase.
-            </p>
-
-            <ul className="mt-8 flex flex-wrap justify-center gap-3 lg:justify-start">
-              {heroChips.map((chip) => (
-                <li
-                  key={chip}
-                  className="inline-flex items-center gap-2 rounded-full border border-line bg-ivory px-4 py-2 text-sm text-charcoal/85"
-                >
-                  <IconCheck className="h-4 w-4 shrink-0 text-gold" />
-                  {chip}
-                </li>
-              ))}
-            </ul>
-
-            <div className="mt-9 flex flex-col items-center gap-4 sm:flex-row sm:justify-center lg:justify-start">
-              <Button href="/apply" variant="primary" size="lg">
-                Become a Founding Member
-              </Button>
-              <Button href="#agent-advantage" variant="outline" size="lg">
-                See how it helps you win more deals
-              </Button>
-            </div>
-          </Reveal>
-        </Container>
-
-        {/* Hero visual: real app screens, grounded on a restrained property
-           photo — one horizontal "shelf" that scrolls on mobile and lines
-           up in a single row once the viewport is wide enough. */}
-        <Container size="wide" className="relative mt-14 sm:mt-16">
-          <PhoneWall
-            shots={heroWallShots}
-            backdropSrc="/img/hero-property.jpg"
-            backdropAlt="A luxury contemporary property at dusk"
+      <TeaserNav />
+      <main className="flex-1">
+        {/* ---------------------------------------------------------- HERO */}
+        <section className="relative overflow-hidden bg-cream pt-16 pb-16 sm:pt-20 sm:pb-20">
+          <div
+            aria-hidden
+            className="pointer-events-none absolute inset-x-0 top-0 h-[36rem] opacity-70"
+            style={{
+              background:
+                "radial-gradient(45% 60% at 78% 8%, rgba(176,137,79,0.16), transparent 70%)",
+            }}
           />
-        </Container>
-      </section>
-
-      {/* ------------------------------------------------ FOUNDING MEMBER */}
-      <FoundingMemberBand />
-
-      {/* ------------------------------------------- IMMEDIATE PROOF ----- */}
-      <Section tone="ivory" size="tight">
-        <Container>
-          <FeatureGrid items={proofOfValue} columns={3} />
-        </Container>
-      </Section>
-
-      {/* ------------------------------------------ AGENT ADVANTAGE ----- */}
-      <Section tone="cream" id="agent-advantage">
-        <Container size="wide">
-          <SectionHeader
-            eyebrow="The agent advantage"
-            title="How you win more deals"
-            description="A clear path from first discovery to a completed transaction — every stage designed to move your client forward."
-          />
-          <div className="mt-16 grid grid-cols-2 gap-x-6 gap-y-12 sm:grid-cols-3 lg:grid-cols-6">
-            {agentAdvantageJourney.map((stage, i) => (
-              <Reveal key={stage.title} delay={i * 90}>
-                <Link
-                  href="/how-it-works"
-                  className="group flex flex-col items-center text-center"
-                >
-                  <MiniPhone src={stage.image.src} alt={stage.image.alt} />
-                  <span className="mt-4 grid h-8 w-8 place-items-center rounded-full border border-gold/40 font-display text-xs text-gold">
-                    {String(i + 1).padStart(2, "0")}
-                  </span>
-                  <h3 className="mt-3 font-display text-lg text-navy transition-colors group-hover:text-gold">
-                    {stage.title}
-                  </h3>
-                  <p className="mt-1 text-sm leading-snug text-muted">
-                    {stage.outcome}
-                  </p>
-                </Link>
-              </Reveal>
-            ))}
-          </div>
-        </Container>
-      </Section>
-
-      {/* ----------------------------------------------- ONE WORKSPACE -- */}
-      <Section tone="ivory" id="workspace">
-        <Container>
-          <SectionHeader
-            eyebrow="One workspace"
-            title="Everything that keeps a buyer moving—finally in one place."
-            description="No more chasing links, emails, WhatsApp threads, calendars, documents, and third parties. Private Agent gives you one professional home for every client relationship."
-          />
-        </Container>
-        <Container size="wide">
-          <div className="mt-20 flex flex-col gap-24 sm:gap-28">
-            {workspaceStories.map((story, i) => {
-              const flip = i % 2 === 1;
-              return (
-                <Reveal
-                  key={story.title}
-                  className="grid grid-cols-1 items-center gap-12 lg:grid-cols-2 lg:gap-16"
-                >
-                  <div className={cn(flip && "lg:order-2")}>
-                    <p className="eyebrow mb-3">{story.eyebrow}</p>
-                    <h3 className="font-display text-2xl text-navy sm:text-3xl">
-                      {story.title}
-                    </h3>
-                    <p className="mt-4 text-lg leading-relaxed text-muted">
-                      {story.body}
-                    </p>
-                  </div>
-                  <div
-                    className={cn(
-                      "flex flex-col items-center gap-8",
-                      flip && "lg:order-1",
-                    )}
-                  >
-                    {story.staticShots && (
-                      <div
-                        className={cn(
-                          "grid w-full max-w-sm gap-4",
-                          story.staticShots.length === 3
-                            ? "grid-cols-3"
-                            : "grid-cols-2",
-                        )}
-                      >
-                        {story.staticShots.map((s) => (
-                          <MiniPhone
-                            key={s.src}
-                            src={s.src}
-                            alt={s.alt}
-                            className="max-w-[150px]"
-                          />
-                        ))}
-                      </div>
-                    )}
-                    <CyclingPhone
-                      images={story.cyclingShots}
-                      className="w-full max-w-[220px]"
-                    />
-                  </div>
-                </Reveal>
-              );
-            })}
-          </div>
-        </Container>
-      </Section>
-
-      {/* --------------------------------------------------- CREDIBILITY */}
-      <Section tone="sand">
-        <Container>
-          <div className="grid grid-cols-1 items-center gap-14 lg:grid-cols-2">
-            <Reveal>
-              <p className="eyebrow mb-4">Why agents trust the platform</p>
-              <h2 className="font-display text-3xl leading-tight text-navy sm:text-4xl">
-                Built for professionals who take their craft seriously.
-              </h2>
-              <ul className="mt-8 grid gap-4 sm:grid-cols-2">
-                {credibilityPoints.map((point) => (
-                  <li key={point} className="flex gap-3 text-charcoal/85">
-                    <IconCheck className="mt-1 h-4 w-4 shrink-0 text-gold" />
-                    <span>{point}</span>
-                  </li>
-                ))}
-              </ul>
-            </Reveal>
-            <Reveal delay={100} className="flex flex-col items-center">
-              <CyclingPhone
-                images={buyerOnboardingShots}
-                intervalMs={2600}
-                className="w-full max-w-[260px]"
-              />
-              <p className="mt-6 max-w-xs text-center text-sm text-muted">
-                See how thoroughly every buyer is qualified before you ever
-                hear from them.
+          <Container className="relative">
+            <Reveal className="mx-auto max-w-2xl text-center">
+              <p className="eyebrow mb-5">
+                Coming Soon &mdash; For Buyer&rsquo;s Agents
               </p>
-            </Reveal>
-          </div>
-        </Container>
-      </Section>
+              <h1 className="font-display text-[2.5rem] leading-[1.08] text-navy sm:text-6xl">
+                Win better buyers.{" "}
+                <em className="text-gold">Run better deals.</em>
+              </h1>
+              <p className="mx-auto mt-6 max-w-xl text-lg leading-relaxed text-muted">
+                Private Agent is a new platform built to help buyer&rsquo;s
+                agents get discovered by serious buyers, cut the admin, and
+                close more deals &mdash; all in one place. We&rsquo;re opening
+                the doors to a limited group of Founding Members first.
+              </p>
 
-      {/* ------------------------------------------------- FINAL CTA ---- */}
-      <ApplyCTA
-        eyebrow="Founding Member"
-        title="Get in early. Be seen first. Build your advantage."
-        body="Apply now to become a Founding Member and secure first access, priority onboarding, and special founding offers before public launch."
-        primaryLabel="Apply as a Founding Member"
-        secondaryLabel="Explore membership benefits"
-        secondaryHref="/pricing"
-      />
-      <NewsletterSection />
-      <ContactSection />
+              <div id="join" className="mx-auto mt-9 max-w-md scroll-mt-24">
+                <NewsletterForm tone="dark" />
+                <p className="mt-4 text-sm text-faint">
+                  Founding Members get preferential pricing and exclusive
+                  launch benefits. No spam &mdash; unsubscribe anytime.
+                </p>
+              </div>
+            </Reveal>
+          </Container>
+
+          <Container size="wide" className="relative mt-14 sm:mt-16">
+            <PhoneWall
+              shots={heroWallShots.slice(0, 3)}
+              backdropSrc="/img/hero-property.jpg"
+              backdropAlt="A luxury contemporary property at dusk"
+            />
+          </Container>
+        </section>
+
+        {/* ------------------------------------------------ VALUE TEASER -- */}
+        <Section tone="ivory">
+          <Container>
+            <SectionHeader
+              eyebrow="What's coming"
+              title={
+                <>
+                  Built for agents who want{" "}
+                  <em className="text-gold">more clients</em> and less admin
+                </>
+              }
+              description="A first look at what Founding Members will get access to at launch."
+            />
+            <FeatureGrid items={agentValue} columns={3} className="mt-16" />
+          </Container>
+        </Section>
+
+        {/* -------------------------------------------- PRICING TEASER --- */}
+        <Section tone="navy" className="relative overflow-hidden">
+          <div
+            aria-hidden
+            className="pointer-events-none absolute inset-0 opacity-70"
+            style={{
+              background:
+                "radial-gradient(60% 120% at 50% -10%, rgba(176,137,79,0.22), transparent 60%)",
+            }}
+          />
+          <Container className="relative text-center">
+            <Reveal>
+              <p className="eyebrow mb-4">Pricing</p>
+              <h2 className="mx-auto max-w-2xl font-display text-3xl leading-tight text-cream sm:text-5xl">
+                Pricing coming soon.
+              </h2>
+              <p className="mx-auto mt-6 max-w-xl text-cream/70">
+                We&rsquo;re finalising membership pricing ahead of launch.
+                Join the mailing list now and Founding Members will receive
+                preferential pricing and exclusive founder benefits when we
+                open the doors.
+              </p>
+              <div className="mt-9">
+                <Button href="#join" variant="onDark" size="lg">
+                  Join the Waitlist
+                </Button>
+              </div>
+            </Reveal>
+          </Container>
+        </Section>
+
+        {/* ------------------------------------------------ COMING SOON --- */}
+        <Section tone="sand" id="coming-soon">
+          <Container>
+            <SectionHeader
+              eyebrow="Just the beginning"
+              title="Many more features are coming soon to those who enrol."
+              description="Our full walkthrough for buyers, complete pricing, resources and more will unlock as we get closer to launch — Founding Members get access first."
+            />
+            <div className="mt-14 grid grid-cols-2 gap-4 sm:grid-cols-3 lg:grid-cols-5">
+              {lockedAreas.map((area, i) => (
+                <Reveal
+                  key={area.label}
+                  delay={i * 70}
+                  className="flex flex-col items-center gap-3 rounded-lg border border-line/70 bg-ivory/60 px-4 py-8 text-center"
+                >
+                  <span className="grid h-11 w-11 place-items-center rounded-full border border-charcoal/15 text-charcoal/35">
+                    <IconLock className="h-5 w-5" />
+                  </span>
+                  <span className="font-display text-base text-charcoal/50">
+                    {area.label}
+                  </span>
+                  <span className="text-[0.65rem] font-semibold uppercase tracking-[0.14em] text-gold/70">
+                    {area.caption}
+                  </span>
+                </Reveal>
+              ))}
+            </div>
+          </Container>
+        </Section>
+
+        {/* -------------------------------------------------- FINAL CTA --- */}
+        <Section tone="ink">
+          <Container size="narrow" className="text-center">
+            <Reveal>
+              <p className="eyebrow mb-4">Founding Members</p>
+              <h2 className="font-display text-3xl leading-tight text-cream sm:text-5xl">
+                Be first through the door.
+              </h2>
+              <p className="mx-auto mt-6 max-w-md text-cream/70">
+                Join the mailing list to be notified the moment we launch
+                &mdash; and lock in preferential founding pricing and
+                benefits.
+              </p>
+              <div className="mx-auto mt-9 max-w-md">
+                <NewsletterForm tone="light" />
+                <p className="mt-4 text-sm text-cream/40">
+                  We respect your privacy. Unsubscribe anytime.
+                </p>
+              </div>
+            </Reveal>
+          </Container>
+        </Section>
+      </main>
+      <TeaserFooter />
     </>
   );
 }
