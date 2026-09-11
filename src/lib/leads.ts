@@ -27,7 +27,7 @@ async function readJson(file: string): Promise<unknown[]> {
 }
 
 export async function appendLead(
-  kind: "apply" | "newsletter",
+  kind: "apply" | "newsletter" | "founding-member",
   record: Record<string, unknown>,
 ): Promise<void> {
   await fs.mkdir(dataDir, { recursive: true });

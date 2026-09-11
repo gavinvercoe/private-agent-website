@@ -6,11 +6,13 @@ import { Section } from "@/components/Section";
 import { SectionHeader } from "@/components/SectionHeader";
 import { Button } from "@/components/Button";
 import { Reveal } from "@/components/Reveal";
-import { FeatureGrid } from "@/components/FeatureGrid";
+import { FeatureGrid, FeatureList } from "@/components/FeatureGrid";
 import { PhoneWall } from "@/components/PhoneWall";
+import { PhoneShot, ScreenGallery } from "@/components/PhoneShot";
 import { NewsletterForm } from "@/components/NewsletterForm";
-import { IconLock } from "@/components/icons";
-import { agentValue, heroWallShots } from "@/lib/content";
+import { FoundingMemberForm } from "@/components/FoundingMemberForm";
+import { IconLock, IconCheck, IconBadge } from "@/components/icons";
+import { agentValue, heroWallShots, trustPoints } from "@/lib/content";
 
 export const metadata: Metadata = {
   title: "Coming Soon",
@@ -24,6 +26,14 @@ const lockedAreas = [
   { label: "Full Pricing", caption: "Unlocking soon" },
   { label: "Resources", caption: "Unlocking soon" },
   { label: "About Us", caption: "Unlocking soon" },
+];
+
+const certificationPoints = [
+  "Upload your real estate license and proof of registration",
+  "Complete an EU-standard KYC verification",
+  "Earn the Buyers Agent Certified badge on your profile",
+  "Get listed in the exclusive certified directory",
+  "Use the Private Agent & Certification logos on your marketing",
 ];
 
 export default function ComingSoonPage() {
@@ -93,6 +103,100 @@ export default function ComingSoonPage() {
           </Container>
         </Section>
 
+        {/* --------------------------------------------- WORKSPACE GALLERY */}
+        <Section tone="cream">
+          <Container size="wide">
+            <SectionHeader
+              eyebrow="Your workspace"
+              title="Run every deal from one place"
+              description="Appointments, agreements, deal tracking and documents — a complete transaction workspace built for buyer's agents."
+            />
+            <ScreenGallery
+              className="mt-16"
+              items={[
+                { src: "/screens/appointment-and-deal-flow/01-appoint-agent.png", alt: "Appoint agent", caption: "Appointments" },
+                { src: "/screens/appointment-and-deal-flow/07-active-agent-workspace.png", alt: "Active agent overview", caption: "Active clients" },
+                { src: "/screens/appointment-and-deal-flow/09-deal-status-tracker.png", alt: "Deal status tracker", caption: "Deal tracking" },
+                { src: "/screens/appointment-and-deal-flow/10-documents-library.png", alt: "Documents library", caption: "Documents" },
+              ]}
+            />
+          </Container>
+        </Section>
+
+        {/* ---------------------------------------------------- CERTIFICATION */}
+        <Section tone="ivory">
+          <Container>
+            <div className="grid grid-cols-1 items-center gap-14 lg:grid-cols-2">
+              <Reveal>
+                <p className="eyebrow mb-4">Certification</p>
+                <h2 className="font-display text-3xl leading-tight text-navy sm:text-4xl">
+                  Become a Certified{" "}
+                  <em className="text-gold">Global Buyers Agent.</em>
+                </h2>
+                <p className="mt-5 text-lg leading-relaxed text-muted">
+                  Certification builds trust with the high-value buyers you
+                  want to work with &mdash; and sets you apart from the
+                  competition. We&rsquo;ll verify your credentials and
+                  certify your profile.
+                </p>
+                <ul className="mt-7 space-y-3">
+                  {certificationPoints.map((point) => (
+                    <li key={point} className="flex gap-3 text-charcoal/85">
+                      <IconCheck className="mt-1 h-4 w-4 shrink-0 text-gold" />
+                      {point}
+                    </li>
+                  ))}
+                </ul>
+                <p className="mt-6 text-sm text-faint">
+                  Certified members maintain their standing through client
+                  ratings and an annual certification review.
+                </p>
+                <Button href="#founding-member" variant="primary" className="mt-8">
+                  Join the Waitlist
+                </Button>
+              </Reveal>
+              <Reveal delay={100} className="flex justify-center">
+                <div className="relative w-full max-w-[300px]">
+                  <PhoneShot
+                    src="/screens/appointment-and-deal-flow/04-identity-verification.png"
+                    alt="Private Agent app — identity verification and KYC for certification"
+                  />
+                  <div className="absolute -bottom-4 -right-2 flex items-center gap-3 rounded-xl border border-line bg-ivory p-4 shadow-[0_30px_60px_-30px_rgba(20,32,58,0.5)] sm:-right-6">
+                    <span className="grid h-12 w-12 place-items-center rounded-full border border-gold/50 text-gold">
+                      <IconBadge className="h-7 w-7" />
+                    </span>
+                    <div>
+                      <p className="font-display text-base text-navy">
+                        Certified
+                      </p>
+                      <p className="text-[0.68rem] uppercase tracking-[0.14em] text-gold">
+                        Buyers Agent
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              </Reveal>
+            </div>
+          </Container>
+        </Section>
+
+        {/* -------------------------------------------------- TRUST BAND -- */}
+        <Section tone="ink">
+          <Container>
+            <SectionHeader
+              tone="light"
+              eyebrow="Confidence, built in"
+              title="Secure, verified and professional at every step"
+            />
+            <FeatureList
+              items={trustPoints}
+              tone="light"
+              columns={3}
+              className="mt-16"
+            />
+          </Container>
+        </Section>
+
         {/* -------------------------------------------- PRICING TEASER --- */}
         <Section tone="navy" className="relative overflow-hidden">
           <div
@@ -116,7 +220,7 @@ export default function ComingSoonPage() {
                 open the doors.
               </p>
               <div className="mt-9">
-                <Button href="#join" variant="onDark" size="lg">
+                <Button href="#founding-member" variant="onDark" size="lg">
                   Join the Waitlist
                 </Button>
               </div>
@@ -154,26 +258,23 @@ export default function ComingSoonPage() {
           </Container>
         </Section>
 
-        {/* -------------------------------------------------- FINAL CTA --- */}
-        <Section tone="ink">
-          <Container size="narrow" className="text-center">
-            <Reveal>
+        {/* --------------------------------------- FINAL CTA / FULL FORM -- */}
+        <Section tone="cream" id="founding-member" className="scroll-mt-16">
+          <Container size="narrow">
+            <Reveal className="text-center">
               <p className="eyebrow mb-4">Founding Members</p>
-              <h2 className="font-display text-3xl leading-tight text-cream sm:text-5xl">
+              <h2 className="font-display text-3xl leading-tight text-navy sm:text-5xl">
                 Be first through the door.
               </h2>
-              <p className="mx-auto mt-6 max-w-md text-cream/70">
-                Join the mailing list to be notified the moment we launch
-                &mdash; and lock in preferential founding pricing and
-                benefits.
+              <p className="mx-auto mt-6 max-w-md text-muted">
+                Tell us a little about yourself to join the Founding Member
+                waitlist &mdash; we&rsquo;ll be in touch as launch approaches
+                with your preferential pricing and benefits.
               </p>
-              <div className="mx-auto mt-9 max-w-md">
-                <NewsletterForm tone="light" />
-                <p className="mt-4 text-sm text-cream/40">
-                  We respect your privacy. Unsubscribe anytime.
-                </p>
-              </div>
             </Reveal>
+            <div className="mx-auto mt-10 max-w-2xl">
+              <FoundingMemberForm />
+            </div>
           </Container>
         </Section>
       </main>
